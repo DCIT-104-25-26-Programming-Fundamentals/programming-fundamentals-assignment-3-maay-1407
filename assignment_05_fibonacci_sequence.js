@@ -54,4 +54,79 @@
 // YOUR CODE BELOW — remove the // symbols from the scaffold and fill it in
 // =============================================================================
 
+const readlineSync = require('readline-sync');
 
+/**
+ * PART A: Generates an array containing the first N terms of the Fibonacci sequence.
+ * @param {number} n 
+ * @returns {number[]} Array of Fibonacci numbers
+ */
+function generateFibonacci(n) {
+    if (n <= 0) return [];
+    if (n === 1) return [0];
+
+    const sequence = [0, 1];
+
+    for (let i = 2; i < n; i++) {
+        const nextTerm = sequence[i - 1] + sequence[i - 2];
+        sequence.push(nextTerm);
+    }
+
+    return sequence;
+}
+
+/**
+ * PART B: Checks whether a given target number belongs to the Fibonacci sequence.
+ * @param {number} target 
+ * @returns {boolean} True if target is a Fibonacci number, false otherwise
+ */
+function isFibonacciNumber(target) {
+    if (target < 0) return false;
+    if (target === 0 || target === 1) return true;
+
+    let a = 0;
+    let b = 1;
+    let nextTerm = a + b;
+
+    while (nextTerm <= target) {
+        if (nextTerm === target) {
+            return true;
+        }
+        a = b;
+        b = nextTerm;
+        nextTerm = a + b;
+    }
+
+    return false;
+}
+
+/**
+ * Main execution function
+ */
+function main() {
+    console.log("=== FIBONACCI SEQUENCE GENERATOR ===");
+
+   
+    console.log("\n--- PART A: PRINT FIRST N TERMS ---");
+    const count = readlineSync.questionInt('How many terms? ');
+
+    if (count <= 0) {
+        console.log('Error: Please enter a positive integer greater than 0.');
+    } else {
+        const fibSequence = generateFibonacci(count);
+        console.log(`Fibonacci sequence: ${fibSequence.join(' ')}`);
+    }
+
+    
+    console.log("\n--- PART B: CHECK A NUMBER ---");
+    const numToCheck = readlineSync.questionInt('Enter a number to check: ');
+
+    if (isFibonacciNumber(numToCheck)) {
+        console.log(`${numToCheck} is a Fibonacci number.`);
+    } else {
+        console.log(`${numToCheck} is NOT a Fibonacci number.`);
+    }
+}
+
+
+main();
